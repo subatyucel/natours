@@ -72,9 +72,16 @@ exports.updateTourController = async (req, res) => {
   }
 };
 
-exports.deleteTourController = (req, res) => {
-  res.status(204).json({
-    status: 'success',
-    data: null,
-  });
+exports.deleteTourController = async (req, res) => {
+  try {
+    await Tour.findByIdAndDelete(req.params.id);
+    res.status(204).json({
+      status: 'success',
+    });
+  } catch (e) {
+    res.status(404).json({
+      status: 'fail',
+      message: e,
+    });
+  }
 };
