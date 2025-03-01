@@ -52,13 +52,24 @@ exports.createTourController = async (req, res) => {
   }
 };
 
-exports.updateTourController = (req, res) => {
-  res.json({
-    status: 'success',
-    data: {
-      tour: '<Updated Tour Placeholder>',
-    },
-  });
+exports.updateTourController = async (req, res) => {
+  try {
+    const tour = await Tour.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: false,
+    });
+    res.json({
+      status: 'success',
+      data: {
+        tour,
+      },
+    });
+  } catch (e) {
+    res.status(404).json({
+      status: 'fail',
+      message: e,
+    });
+  }
 };
 
 exports.deleteTourController = (req, res) => {
