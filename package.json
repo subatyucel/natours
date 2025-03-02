@@ -4,7 +4,9 @@
   "description": "Learning node, express and mongoDB",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "import-dev-data": "node dev-data/data/import-dev-data.js --import",
+    "delete-dev-data": "node dev-data/data/import-dev-data.js --delete"
   },
   "repository": {
     "type": "git",
