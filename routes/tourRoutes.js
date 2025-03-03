@@ -6,6 +6,8 @@ router
   .route('/top-5-cheap')
   .get(tourController.aliasTopTours, tourController.getAllToursController);
 
+router.route('/tour-stats').get(tourController.getToursStats);
+
 router
   .route('/')
   .get(tourController.getAllToursController)
