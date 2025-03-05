@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon server.js",
     "import-dev-data": "node dev-data/data/import-dev-data.js --import",
-    "delete-dev-data": "node dev-data/data/import-dev-data.js --delete"
+    "delete-dev-data": "node dev-data/data/import-dev-data.js --delete",
+    "debug": "ndb server.js"
   },
   "repository": {
     "type": "git",
