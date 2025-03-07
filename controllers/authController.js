@@ -77,3 +77,12 @@ exports.protect = catchAsync(async (req, res, next) => {
   req.user = freshUser;
   next();
 });
+
+exports.restrictTo =
+  (...roles) =>
+  (req, res, next) => {
+    if (!roles.includes(req.user.role))
+      next(new AppError("You don't have permission to perform this action", 302));
+
+    next();
+  };
