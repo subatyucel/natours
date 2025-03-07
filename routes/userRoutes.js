@@ -9,15 +9,8 @@ router.post('/login', authController.login);
 router.post('/forgot-password', authController.forgotPassword);
 router.patch('/reset-password/:token', authController.resetPassword);
 
-router
-  .route('/')
-  .get(userController.getAllUsersController)
-  .post(userController.createUserController);
+router.route('/').get(userController.getAllUsersController);
 
-router
-  .route('/:id')
-  .get(userController.getUserByIdController)
-  .patch(userController.updateUserController)
-  .delete(userController.deleteUserController);
+router.route('/:id').get(userController.getUserByIdController);
 
 module.exports = router;
