@@ -18,6 +18,9 @@ router.delete('/delete-me', authController.protect, userController.deleteMeContr
 
 router.route('/').get(userController.getAllUsersController);
 
-router.route('/:id').get(userController.getUserByIdController);
+router
+  .route('/:id')
+  .get(userController.getUserByIdController)
+  .delete(userController.deleteUserController);
 
 module.exports = router;
