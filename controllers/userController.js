@@ -52,6 +52,8 @@ exports.getMe = (req, res, next) => {
   req.params.id = req.user.id;
   next();
 };
+
+exports.createUserController = factory.createOne(User);
 exports.getAllUsersController = factory.getAll(User);
 exports.getUserByIdController = factory.getOne(User);
 exports.deleteUserController = factory.deleteOne(User);
