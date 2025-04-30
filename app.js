@@ -25,9 +25,31 @@ const limiter = rateLimit({
   message: 'Too many requests from this IP, please try again in an hour!',
 });
 
-//GLOBAL MIDDLEWARES
+//GLOBAL MIDDLEW9ARES
 //Set Security http headers
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'"],
+        styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
+        imgSrc: [
+          "'self'",
+          'data:',
+          'https://tile.openstreetmap.org',
+          'https://*.tile.openstreetmap.org',
+          'https://*.tile.openstreetmap.fr',
+          'https://*.tile.osm.org',
+          'https://c.basemaps.cartocdn.com',
+          'https://b.basemaps.cartocdn.com',
+          'https://a.basemaps.cartocdn.com',
+        ],
+        fontSrc: ["'self'", 'https:', 'https://fonts.gstatic.com'],
+      },
+    },
+  }),
+);
 
 //Development logging
 if (process.env.NODE_ENV === 'development') app.use(morgan('dev'));
