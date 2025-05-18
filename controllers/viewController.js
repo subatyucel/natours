@@ -10,7 +10,7 @@ exports.getOverviewController = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.getTourController = catchAsync(async (req, res) => {
+exports.getTourController = catchAsync(async (req, res, next) => {
   const { slug } = req.params;
   const tour = await Tour.findOne({ slug }).populate({
     path: 'reviews',
@@ -22,3 +22,7 @@ exports.getTourController = catchAsync(async (req, res) => {
     tour,
   });
 });
+
+exports.getLoginFormController = (req, res) => {
+  res.status(200).render('login', { title: 'Log into your account.' });
+};
