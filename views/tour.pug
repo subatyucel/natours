@@ -3,7 +3,7 @@ include _reviewCard
 
 block append head
     link(rel='stylesheet' href='/leaflet/leaflet.css')
-    script(src="/leaflet/leaflet.js")
+    script(src="/leaflet/leaflet.js" defer)
     script(src='/js/map.js' defer)
 
 mixin overviewBox(label, text, icon)
