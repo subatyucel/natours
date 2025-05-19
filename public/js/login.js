@@ -9,16 +9,33 @@ const login = async (email, password) => {
       },
       body: JSON.stringify({ email, password }),
     });
+
     const data = await res.json();
+
     if (data.status === 'success') {
-      alert('Login successful');
+      showAlert('success', 'Login successful');
       window.setTimeout(() => {
         location.assign('/');
       }, 1500);
-    } else throw new Error(data.message);
+    } else {
+      throw new Error(data.message);
+    }
   } catch (e) {
-    alert(e);
+    showAlert('error', e.message);
   }
+};
+
+//Type = success || error
+const showAlert = (type, message) => {
+  hideAlert();
+  const HTML = `<div class="alert alert--${type}">${message}</div>`;
+  document.querySelector('body').insertAdjacentHTML('afterbegin', HTML);
+  window.setTimeout(hideAlert, 5000);
+};
+
+const hideAlert = () => {
+  const el = document.querySelector('.alert');
+  if (el) el.remove();
 };
 
 document.querySelector('.form').addEventListener('submit', (e) => {
