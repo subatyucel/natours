@@ -10,10 +10,14 @@ const login = async (email, password) => {
       body: JSON.stringify({ email, password }),
     });
     const data = await res.json();
-    if (data.status === 'fail') throw new Error(data.message);
-    console.log(data);
+    if (data.status === 'success') {
+      alert('Login successful');
+      window.setTimeout(() => {
+        location.assign('/');
+      }, 1500);
+    } else throw new Error(data.message);
   } catch (e) {
-    console.log(e);
+    alert(e);
   }
 };
 
