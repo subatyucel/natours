@@ -29,3 +29,9 @@ exports.getTourController = catchAsync(async (req, res, next) => {
 exports.getLoginFormController = (req, res) => {
   res.status(200).render('login', { title: 'Log into your account.' });
 };
+
+exports.getAccountController = (req, res) => {
+  res.status(200).render('account', {
+    title: 'Your account',
+  });
+};

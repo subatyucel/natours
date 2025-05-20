@@ -33,7 +33,7 @@ const logout = async () => {
     const res = await fetch('http://localhost:3000/api/v1/users/logout');
     const data = await res.json();
 
-    if (data.status === 'success') location.reload(true);
+    if (data.status === 'success') location.assign('/');
     else throw new Error(data.message);
   } catch (e) {
     showAlert('error', 'Error logging out! Check your internet connection!');
