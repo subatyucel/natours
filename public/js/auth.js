@@ -36,7 +36,7 @@ const logout = async () => {
     if (data.status === 'success') location.reload(true);
     else throw new Error(data.message);
   } catch (e) {
-    showAlert('error', e.message);
+    showAlert('error', 'Error logging out! Check your internet connection!');
   }
 };
 
