@@ -60,6 +60,7 @@ app.use('/api', limiter);
 
 //Body parser - (MAX 10KB data on the body)
 app.use(express.json({ limit: '10kb' }));
+app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 app.use(cookieParser());
 
 //Data santitazition againts NoSql query injection

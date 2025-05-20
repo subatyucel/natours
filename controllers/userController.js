@@ -32,7 +32,7 @@ exports.updateMeController = catchAsync(async (req, res, next) => {
   });
 
   res.json({
-    staus: 'success',
+    status: 'success',
     data: {
       user: updatedUser,
     },
