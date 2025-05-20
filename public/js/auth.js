@@ -1,5 +1,8 @@
 /*eslint-disable*/
 
+const loginForm = document.querySelector('.form');
+const logoutBtn = document.querySelector('.nav__el--logout');
+
 const login = async (email, password) => {
   try {
     const res = await fetch('http://localhost:3000/api/v1/users/login', {
@@ -25,6 +28,18 @@ const login = async (email, password) => {
   }
 };
 
+const logout = async () => {
+  try {
+    const res = await fetch('http://localhost:3000/api/v1/users/logout');
+    const data = await res.json();
+
+    if (data.status === 'success') location.reload(true);
+    else throw new Error(data.message);
+  } catch (e) {
+    showAlert('error', e.message);
+  }
+};
+
 //Type = success || error
 const showAlert = (type, message) => {
   hideAlert();
@@ -38,9 +53,15 @@ const hideAlert = () => {
   if (el) el.remove();
 };
 
-document.querySelector('.form').addEventListener('submit', (e) => {
-  e.preventDefault();
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
-  login(email, password);
-});
+if (loginForm) {
+  loginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    login(email, password);
+  });
+}
+
+if (logoutBtn) {
+  logoutBtn.addEventListener('click', logout);
+}
