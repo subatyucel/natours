@@ -33,8 +33,6 @@ const filterObj = (obj, ...allowedFields) => {
 };
 
 exports.updateMeController = catchAsync(async (req, res, next) => {
-  console.log(req.file);
-  console.log(req.body);
   //Create an error if user posts password data
   if (req.body.password || req.body.passwordConfirm)
     next(
@@ -46,6 +44,7 @@ exports.updateMeController = catchAsync(async (req, res, next) => {
 
   //filter out unwanted body fields
   const filteredBody = filterObj(req.body, 'name', 'email');
+  if (req.file) filteredBody.photo = req.file.filename;
 
   //update user data
   const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
