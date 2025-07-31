@@ -23,6 +23,7 @@ exports.resizeUserPhotoController = catchAsync(async (req, res, next) => {
   await sharp(req.file.buffer)
     .resize({ height: 500, width: 500 })
     .toFormat('jpeg')
+    .jpeg({ quality: 90 })
     .toFile(`public/img/users/${req.file.filename}`);
 
   next();
