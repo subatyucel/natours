@@ -61,19 +61,16 @@ const updateSettings = async (userData, type) => {
   try {
     const res = await fetch(url, {
       method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(userData),
+      body: userData,
     });
-
     const data = await res.json();
-    if (data.status === 'success')
+    if (data.status === 'success') {
       showAlert(
         'success',
         `${type[0].toUpperCase() + type.slice(1)} updated successfully!`,
       );
-    else throw new Error(data.message);
+      location.reload();
+    } else throw new Error(data.message);
   } catch (e) {
     showAlert('error', e.message);
   }
@@ -92,9 +89,12 @@ if (logoutBtn) logoutBtn.addEventListener('click', logout);
 if (userDataForm)
   userDataForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    updateSettings({ name, email }, 'data');
+    const form = new FormData();
+    form.append('name', document.getElementById('name').value);
+    form.append('email', document.getElementById('email').value);
+    form.append('photo', document.getElementById('photo').files[0]);
+
+    updateSettings(form, 'data');
   });
 
 if (passwordForm)
