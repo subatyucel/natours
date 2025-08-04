@@ -11,6 +11,7 @@ const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
 const viewRouter = require('./routes/viewRoutes');
+const bookingRouter = require('./routes/bookingRoutes');
 const AppError = require('./utils/AppError');
 const globalErrorHandler = require('./controllers/errorController');
 
@@ -33,7 +34,7 @@ app.use(
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
-        scriptSrc: ["'self'"],
+        scriptSrc: ["'self'", 'https://js.stripe.com'],
         styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
         imgSrc: [
           "'self'",
@@ -47,6 +48,8 @@ app.use(
           'https://a.basemaps.cartocdn.com',
         ],
         fontSrc: ["'self'", 'https:', 'https://fonts.gstatic.com'],
+        frameSrc: ["'self'", 'https://js.stripe.com'],
+        connectSrc: ["'self'", 'https://api.stripe.com'],
       },
     },
   }),
@@ -95,6 +98,8 @@ app.use('/', viewRouter);
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
+app.use('/api/v1/reviews', reviewRouter);
+app.use('/api/v1/bookings', bookingRouter);
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
