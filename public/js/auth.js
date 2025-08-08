@@ -20,7 +20,7 @@ const hideAlert = () => {
 
 const login = async (email, password) => {
   try {
-    const res = await fetch('http://localhost:3000/api/v1/users/login', {
+    const res = await fetch('/api/v1/users/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ const login = async (email, password) => {
 
 const logout = async () => {
   try {
-    const res = await fetch('http://localhost:3000/api/v1/users/logout');
+    const res = await fetch('/api/v1/users/logout');
     const data = await res.json();
 
     if (data.status === 'success') location.assign('/');
@@ -56,7 +56,7 @@ const logout = async () => {
 };
 
 const updateSettings = async (userData, type) => {
-  const url = `http://localhost:3000/api/v1/users/${type === 'password' ? 'update-my-password' : 'update-me'}`;
+  const url = `/api/v1/users/${type === 'password' ? 'update-my-password' : 'update-me'}`;
 
   try {
     const res = await fetch(url, {

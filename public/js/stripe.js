@@ -7,17 +7,13 @@ const stripe = Stripe(
 const bookBtn = document.getElementById('book-tour');
 const bookTour = async (tourId) => {
   try {
-    const res = await fetch(
-      `http://localhost:3000/api/v1/bookings/checkout-session/${tourId}`,
-    );
+    const res = await fetch(`/api/v1/bookings/checkout-session/${tourId}`);
     const data = await res.json();
-    console.log(data);
 
     await stripe.redirectToCheckout({
       sessionId: data.session.id,
     });
   } catch (err) {
-    console.log(err);
     showAlert('error', err);
   }
 };
