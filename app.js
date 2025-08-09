@@ -17,9 +17,9 @@ const AppError = require('./utils/AppError');
 const globalErrorHandler = require('./controllers/errorController');
 
 const app = express();
+app.enable('trust proxy');
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
-//Serving static files
 app.use(express.static(path.join(__dirname, 'public')));
 
 const limiter = rateLimit({
@@ -28,8 +28,6 @@ const limiter = rateLimit({
   message: 'Too many requests from this IP, please try again in an hour!',
 });
 
-//GLOBAL MIDDLEW9ARES
-//Set Security http headers
 app.use(
   helmet({
     contentSecurityPolicy: {
@@ -56,24 +54,18 @@ app.use(
   }),
 );
 
-//Development logging
 if (process.env.NODE_ENV === 'development') app.use(morgan('dev'));
 
-//Limit request limit from a same IP
 app.use('/api', limiter);
 
-//Body parser - (MAX 10KB data on the body)
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 app.use(cookieParser());
 
-//Data santitazition againts NoSql query injection
 app.use(mongoSanitize());
 
-//Data santitazition againts XSS attacks
 app.use(xss());
 
-//Prevent parameter polition
 app.use(
   hpp({
     whitelist: [
@@ -89,13 +81,6 @@ app.use(
 
 app.use(compression());
 
-//Test middleware
-app.use((req, res, next) => {
-  req.requestTime = new Date().toISOString();
-  next();
-});
-
-//ROUTES
 app.use('/', viewRouter);
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
