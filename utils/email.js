@@ -28,6 +28,7 @@ module.exports = class Email {
         user: process.env.EMAIL_USERNAME,
         pass: process.env.EMAIL_PASSWORD,
       },
+      debug: true,
     });
   }
 
@@ -56,7 +57,7 @@ module.exports = class Email {
   async sendPasswordReset() {
     await this.send(
       'passwordReset',
-      'Your password reset token (Valid for only 10 minutes!)',
+      'Your password reset link (Valid for only 10 minutes!)',
     );
   }
 };

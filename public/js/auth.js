@@ -5,6 +5,8 @@ const logoutBtn = document.querySelector('.nav__el--logout');
 const userDataForm = document.querySelector('.form-user-data');
 const passwordForm = document.querySelector('.form-user-password');
 const signUpForm = document.querySelector('.form--signup');
+const forgotPasswordForm = document.querySelector('.form--forgot-password');
+const resetPasswordForm = document.querySelector('.form--reset-password');
 
 //Type = success || error
 const showAlert = (type, message) => {
@@ -127,7 +129,6 @@ if (signUpForm) {
 
 const signUp = async (name, email, password, passwordConfirm) => {
   try {
-    console.log('istek gidiyor lo');
     const res = await fetch('/api/v1/users/signup', {
       method: 'POST',
       headers: {
@@ -137,7 +138,6 @@ const signUp = async (name, email, password, passwordConfirm) => {
     });
 
     const data = await res.json();
-    console.log('cevap geldi lo', data);
 
     if (data.status === 'success') {
       showAlert('success', 'Login successful');
@@ -148,7 +148,80 @@ const signUp = async (name, email, password, passwordConfirm) => {
       throw new Error(data.message);
     }
   } catch (e) {
-    console.log('error oldu lo', e);
     showAlert('error', e.message);
   }
 };
+
+if (forgotPasswordForm) {
+  forgotPasswordForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = document.getElementById('email').value;
+
+    sendResetEmail(email);
+  });
+}
+
+async function sendResetEmail(email) {
+  try {
+    const res = await fetch('/api/v1/users/forgot-password', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email }),
+    });
+
+    const data = await res.json();
+
+    if (data.status === 'success') {
+      showAlert('success', 'Check your mail inbox!');
+    } else {
+      throw new Error(data.message);
+    }
+  } catch (e) {
+    showAlert('error', e.message);
+  }
+}
+
+function getTokenFromUrl() {
+  const url = window.location.href;
+  return url.substring(url.lastIndexOf('/') + 1);
+}
+
+if (resetPasswordForm) {
+  resetPasswordForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const password = document.getElementById('password').value;
+
+    const passwordConfirm = document.getElementById('passwordConfirm').value;
+
+    resetPassword(password, passwordConfirm);
+  });
+}
+
+async function resetPassword(password, passwordConfirm) {
+  const token = getTokenFromUrl();
+  try {
+    const res = await fetch(`/api/v1/users/reset-password/${token}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ password, passwordConfirm }),
+    });
+
+    const data = await res.json();
+    console.log(data);
+
+    if (data.status === 'success') {
+      showAlert('success', 'Password successfully changed');
+      window.setTimeout(() => {
+        location.assign('/');
+      }, 1500);
+    } else {
+      throw new Error(data.message);
+    }
+  } catch (e) {
+    showAlert('error', e.message);
+  }
+}

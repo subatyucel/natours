@@ -35,6 +35,16 @@ exports.getSignUpFormController = (req, res) => {
   res.status(200).render('signup', { title: 'Sign Up' });
 };
 
+exports.getForgotPasswordFormController = (req, res) => {
+  res
+    .status(200)
+    .render('forgotPassword', { title: 'Forgot your password? No worries.' });
+};
+
+exports.getResetPasswordFormController = (req, res) => {
+  res.status(200).render('resetPassword', { title: 'Forgot your password? No worries.' });
+};
+
 exports.getAccountController = (req, res) => {
   res.status(200).render('account', {
     title: 'Your account',
