@@ -4,6 +4,7 @@ const loginForm = document.querySelector('.form--login');
 const logoutBtn = document.querySelector('.nav__el--logout');
 const userDataForm = document.querySelector('.form-user-data');
 const passwordForm = document.querySelector('.form-user-password');
+const signUpForm = document.querySelector('.form--signup');
 
 //Type = success || error
 const showAlert = (type, message) => {
@@ -111,3 +112,43 @@ if (passwordForm)
     document.getElementById('password').value = '';
     document.getElementById('password-confirm').value = '';
   });
+
+if (signUpForm) {
+  signUpForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const passwordConfirm = document.getElementById('passwordConfirm').value;
+
+    signUp(name, email, password, passwordConfirm);
+  });
+}
+
+const signUp = async (name, email, password, passwordConfirm) => {
+  try {
+    console.log('istek gidiyor lo');
+    const res = await fetch('/api/v1/users/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ name, email, password, passwordConfirm }),
+    });
+
+    const data = await res.json();
+    console.log('cevap geldi lo', data);
+
+    if (data.status === 'success') {
+      showAlert('success', 'Login successful');
+      window.setTimeout(() => {
+        location.assign('/');
+      }, 1500);
+    } else {
+      throw new Error(data.message);
+    }
+  } catch (e) {
+    console.log('error oldu lo', e);
+    showAlert('error', e.message);
+  }
+};

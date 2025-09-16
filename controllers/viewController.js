@@ -31,6 +31,10 @@ exports.getLoginFormController = (req, res) => {
   res.status(200).render('login', { title: 'Log into your account.' });
 };
 
+exports.getSignUpFormController = (req, res) => {
+  res.status(200).render('signup', { title: 'Sign Up' });
+};
+
 exports.getAccountController = (req, res) => {
   res.status(200).render('account', {
     title: 'Your account',
