@@ -1395,10 +1395,6 @@ body {
     padding: 0 2rem;
   }
 
-  .nav__user-img {
-    display: none;
-  }
-
   .nav__el--cta {
     padding: 0.5rem;
   }
