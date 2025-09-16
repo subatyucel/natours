@@ -1336,6 +1336,9 @@ body {
 }
 
 @media (max-width: 768px) {
+  .user-view {
+    flex-direction: column;
+  }
   .card-container {
     grid-template-columns: repeat(1, 1fr);
   }
